@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Muklah H N on 28/07/2018.
@@ -20,11 +21,9 @@ public class OpenBookJsonUtils {
         final String ITEMS = "items";
         final String VOLUMEINFO = "volumeInfo";
         final String TITLE = "title";
-        final String ORIGINAL_TITLE = "original_title";
-        final String RELEASE_DATE = "release_date";
-        final String VOTE_AVERAGE = "vote_average";
-        final String OVERVIEW = "overview";
-        final String ID = "id";
+        final String AUTHORS = "authors";
+        final String PUBLISHER = "publisher";
+        final String INFOLINK = "infoLink";
 
         ArrayList<BookItem> parsedBookData = new ArrayList<BookItem>();
 
@@ -33,25 +32,25 @@ public class OpenBookJsonUtils {
 
         for (int i = 0; i < booksArray.length(); i++) {
             String title;
-            String original_title;
-            String release_date;
-            double vote_average;
-            String overview;
-            int id;
+            StringBuilder authors = new StringBuilder();
+            String publisher;
+            String infoLink;
 
             JSONObject bookObject = booksArray.getJSONObject(i);
-
             JSONObject volumeInfo = bookObject.getJSONObject(VOLUMEINFO);
+            JSONArray author = volumeInfo.getJSONArray(AUTHORS);
 
             title = volumeInfo.getString(TITLE);
-//            poster_path = moviesObject.getString(POSTER_PATH);
-//            original_title = moviesObject.getString(ORIGINAL_TITLE);
-//            release_date = moviesObject.getString(RELEASE_DATE);
-//            vote_average = moviesObject.getDouble(VOTE_AVERAGE);
-//            overview = moviesObject.getString(OVERVIEW);
-//            id = moviesObject.getInt(ID);
 
-            parsedBookData.add(new BookItem(title));
+                for (int j=0; j < author.length(); j++) {
+                    authors.append(System.getProperty("line.separator"));
+                    authors.append(author.getString(j));
+                }
+
+            publisher = volumeInfo.getString(PUBLISHER);
+            infoLink = volumeInfo.getString(INFOLINK);
+
+            parsedBookData.add(new BookItem(title, authors, publisher, infoLink));
 
         }
 

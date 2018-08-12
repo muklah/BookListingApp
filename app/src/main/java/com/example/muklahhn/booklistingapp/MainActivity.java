@@ -1,9 +1,13 @@
 package com.example.muklahhn.booklistingapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSearchBox = (EditText)findViewById(R.id.search_box);
-        mBooksList = (ListView)findViewById(R.id.list_view);
-        search = (Button)findViewById(R.id.search);
+        mSearchBox = (EditText) findViewById(R.id.search_box);
+        mBooksList = (ListView) findViewById(R.id.list_view);
+        search = (Button) findViewById(R.id.search);
         mErrorMessageDisplay = (TextView) findViewById(R.id.error_message_display);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
 
@@ -45,13 +49,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                BookItem book = mAdapter.getItem(position);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(book.getInfoLink()));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     private void loadBooksData() {
         String searchQuery = mSearchBox.getText().toString();
-        URL searchUrl = NetworkUtils.buildUrl(searchQuery);
         showBookDataView();
-        new FetchBooksTask().execute(String.valueOf(searchUrl));
+        new FetchBooksTask().execute(String.valueOf(searchQuery));
     }
 
     private void showBookDataView() {
@@ -81,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             URL booksRequestUrl = NetworkUtils.buildUrl(searchBook);
 
             try {
-                String jsonBookResponse = NetworkUtils.getResponseFromHttpUrl(booksRequestUrl);
+                String jsonBookResponse = NetworkUtils.makeHttpRequest(booksRequestUrl);
 
                 ArrayList<BookItem> simpleJsonBookData = OpenBookJsonUtils.getSimpleBookStringsFromJson(MainActivity.this, jsonBookResponse);
 
