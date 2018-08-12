@@ -25,7 +25,6 @@ public class BookAdapter extends ArrayAdapter<BookItem> {
         TextView BookTitle;
         TextView BookAuthors;
         TextView BookPublisher;
-//        TextView BookInfoLink;
     }
 
     @NonNull
@@ -39,7 +38,6 @@ public class BookAdapter extends ArrayAdapter<BookItem> {
             holder.BookTitle = (TextView) bookList.findViewById(R.id.book_title);
             holder.BookAuthors = (TextView) bookList.findViewById(R.id.book_authors);
             holder.BookPublisher = (TextView) bookList.findViewById(R.id.book_publisher);
-//            holder.BookInfoLink = (TextView) bookList.findViewById(R.id.book_info_link);
             bookList.setTag(holder);
         } else {
             holder = (ViewHolder) bookList.getTag();
@@ -49,7 +47,6 @@ public class BookAdapter extends ArrayAdapter<BookItem> {
         holder.BookTitle.setText(book.getTitle());
         holder.BookAuthors.setText("Authors: " + book.getAuthors());
         holder.BookPublisher.setText("Publisher: " + book.getPublisher());
-//        holder.BookInfoLink.setText("InfoLink: " + book.getInfoLink());
 
         return bookList;
     }

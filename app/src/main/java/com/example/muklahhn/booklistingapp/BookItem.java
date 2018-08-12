@@ -23,38 +23,6 @@ public class BookItem {
         this.infoLink = infoLink;
     }
 
-//    @Override
-//    public void writeToParcel(Parcel out, int flags) {
-//        out.writeString(title);
-//        out.writeStringList(authors);
-//        out.writeString(publisher);
-//    }
-//
-//    private BookItem(Parcel in) {
-//        this.title              = in.readString();
-//        in.readStringList(authors);
-//        this.publisher              = in.readString();
-//    }
-//
-//    public BookItem() {
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    public static final Parcelable.Creator<BookItem> CREATOR = new Parcelable.Creator<BookItem>() {
-//        @Override
-//        public BookItem createFromParcel(Parcel in) {
-//            return new BookItem(in);
-//        }
-//        @Override
-//        public BookItem[] newArray(int i) {
-//            return new BookItem[i];
-//        }
-//    };
-
     public String getTitle() {
         return title;
     }
