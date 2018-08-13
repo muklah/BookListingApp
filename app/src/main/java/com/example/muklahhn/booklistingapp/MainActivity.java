@@ -110,7 +110,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<BookItem> bookData) {
+
             mLoadingIndicator.setVisibility(View.INVISIBLE);
+            mAdapter.clear();
             if (bookData != null) {
                 showBookDataView();
                 mAdapter.addAll(bookData);
