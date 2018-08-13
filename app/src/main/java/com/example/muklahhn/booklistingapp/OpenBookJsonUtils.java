@@ -34,21 +34,32 @@ public class OpenBookJsonUtils {
             String title;
             StringBuilder authors = new StringBuilder();
             String publisher;
-            String infoLink;
+            String infoLink = null;
 
             JSONObject bookObject = booksArray.getJSONObject(i);
             JSONObject volumeInfo = bookObject.getJSONObject(VOLUMEINFO);
-            JSONArray author = volumeInfo.getJSONArray(AUTHORS);
 
             title = volumeInfo.getString(TITLE);
 
+            if (volumeInfo.has(AUTHORS)) {
+                JSONArray author = volumeInfo.getJSONArray(AUTHORS);
                 for (int j=0; j < author.length(); j++) {
                     authors.append(System.getProperty("line.separator"));
                     authors.append(author.getString(j));
                 }
+            } else {
+                authors.append("No Authors");
+            }
 
-            publisher = volumeInfo.getString(PUBLISHER);
-            infoLink = volumeInfo.getString(INFOLINK);
+            if (volumeInfo.has(PUBLISHER)) {
+                publisher = volumeInfo.getString(PUBLISHER);
+            } else {
+                publisher = "No Publisher";
+            }
+
+            if (volumeInfo.has(INFOLINK)){
+                infoLink = volumeInfo.getString(INFOLINK);
+            }
 
             parsedBookData.add(new BookItem(title, authors, publisher, infoLink));
 
