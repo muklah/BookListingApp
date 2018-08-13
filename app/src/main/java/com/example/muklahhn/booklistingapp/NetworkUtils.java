@@ -21,7 +21,7 @@ public class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    private static final String BOOKS_BASE_URL = "https://www.googleapis.com/books/v1/volumes";
+    private static final String BOOKS_BASE_URL = "add api link here";
     private static final String Q = "q";
     private static final String BOOKS_END_URL = "maxResults";
     private static final String Value = "20";
